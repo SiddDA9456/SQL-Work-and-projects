@@ -1,0 +1,436 @@
+/* 
+Created BY: Siddhartha
+Created Date: 04-24-2025
+Description: This query displays first, last name and Email addresses, Alias and order by, limit
+SELECT 
+	FirstName as [Custome First Name] ,
+	LastName as [Customer Last Name], 
+	Email as [Customer Email]
+from Customer
+	order by   FirstName ASC, LastName DESC
+	limit 10
+*/
+
+/* 
+Created BY: Siddhartha
+Created Date: 04-24-2025
+Description: Customer who purchased two songs at $0.99 each?
+SELECT InvoiceDate,BillingAddress,BillingCity,total
+from Invoice
+where total = 1.98
+order by InvoiceDate
+*/
+
+/* 
+Created BY: Siddhartha
+Created Date: 04-24-2025
+Description:How many invoices exits between $1.98 and $5.00?
+SELECT InvoiceDate, BillingCity, BillingAddress, total
+FROM Invoice
+where total BETWEEN 1.98 and 5.00
+order by InvoiceDate
+*/
+
+/* 
+Created BY: Siddhartha
+Created Date: 04-24-2025
+Description: how many invoices do we have exactly 1.98 and 3.96
+SELECT InvoiceDate,BillingCity,BillingAddress,total
+from Invoice
+where total in (1.98,3.96)
+order by InvoiceDate
+*/
+
+/* 
+Created BY: Siddhartha
+Created Date: 04-24-2025
+Description: How many invoices were billed to Brussels?
+SELECT InvoiceDate, BillingCity, BillingAddress, total
+FROM Invoice
+WHERE BillingCity = 'Brussels'
+order by InvoiceDate
+*/
+
+
+/* 
+Created BY: Siddhartha
+Created Date: 04-24-2025
+Description: How many invoices were billed to Brussels, orlando and paris?______IN operator
+SELECT InvoiceDate, BillingCity, BillingAddress, total
+from Invoice
+WHERE BillingCity in ('Brussels', 'Orlando','Paris')
+*/
+
+/* 
+Created BY: Siddhartha
+Created Date: 04-24-2025
+Description: How many invoices were billed in cities that start with B?________Like Operator
+% i don't care what comes next
+SELECT InvoiceDate, BillingCity, BillingAddress, total
+from Invoice
+where BillingCity like 'B%'
+*/
+
+/* 
+Created BY: Siddhartha
+Created Date: 04-24-2025
+Description: How many invoices were billed in cities that have a B anywhere in its name?
+% i don't care what comes next
+SELECT InvoiceDate, BillingCity, BillingAddress, total
+from Invoice
+where BillingCity like '%B%'
+*/
+
+
+/* 
+Created BY: Siddhartha
+Created Date: 04-24-2025
+Description: How many invoices were billed on 2010-05-22 00:00:00?
+SELECT InvoiceDate, BillingCity, BillingAddress, total
+from Invoice
+where InvoiceDate = '2010-05-22 00:00:00'
+order by InvoiceDate
+*/
+
+/* 
+Created BY: Siddhartha
+Created Date: 04-24-2025
+Description: How many invoices were billed on 2010-05-22 00:00:00?________Date function is used
+SELECT InvoiceDate, BillingCity, BillingAddress, total
+from Invoice
+where date(InvoiceDate) = '2010-05-22'
+order by InvoiceDate
+*/
+
+
+/* 
+Created BY: Siddhartha
+Created Date: 04-24-2025
+Description: Get all invoices were billed after 2010-05-22 and have a total of less than 3.00?
+SELECT InvoiceDate, BillingCity, BillingAddress, total
+from Invoice
+WHERE date(InvoiceDate)> '2010-05-22' and total < 3.00
+order by InvoiceDate 
+*/
+/* 
+Created BY: Siddhartha
+Created Date: 04-24-2025
+Description: Get all invoices who's billing city is start with P or start with D?
+SELECT InvoiceDate, BillingCity, BillingAddress, total
+from Invoice
+WHERE BillingCity like 'P%' or BillingCity like 'D%'
+order by InvoiceDate 
+*/
+
+/*
+Created BY: Siddhartha_________________________________________________________CASE
+Created Date: 04-24-2025
+Description: WSDA Music Goal:
+They want as many customers as possible to spend between $7.00 and $15.00
+
+Sales Categories:
+Baseline Purchase - Between $0.99 and $1.99
+Low Purchase- Between $2.00 and $6.99
+Target Purchase- Between $7.00 and $15.00
+Top Performer- Above $15.00
+SELECT 
+	InvoiceDate, 
+	BillingCity, 
+	BillingAddress, 
+	total,
+	CASE
+	WHEN total < 2.00 THEN 'Baseline Purchase'
+	WHEN total BETWEEN 2.00 and 6.99 THEN 'Low purchase'
+	WHEN total BETWEEN 7.00 and 15.00 THEN 'Target Purchase'
+	ELSE 'Top performer'
+	END as "Purchase Type"
+FROM 
+Invoice
+order by BillingCity
+*/
+
+/* 
+Created BY: Siddhartha________________________________________________________PEMDAS and BEMDAS
+Created Date: 04-24-2025
+Description: Get all invoices that are greater than 1.98 from any cities whose name with P or starts with D?
+SELECT InvoiceDate, BillingCity, BillingAddress, total
+FROM Invoice
+WHERE total>1.98 and (BillingCity like 'P%' or BillingCity like 'D%')
+order by total 
+
+PEMDAS- Parentheses, Exponents, Multiplication/Division,Addition/Substraction
+BEMDAS- Bracket, Exponents, Mutlplication/Division, Addition/Substraction
+*/
+
+/*
+Created BY: Siddhartha_________________________________________________________CASE
+Created Date: 04-24-2025
+Description: WSDA Music Goal:
+They want as many customers as possible to spend between $7.00 and $15.00
+
+Sales Categories:
+Baseline Purchase - Between $0.99 and $1.99
+Low Purchase- Between $2.00 and $6.99
+Target Purchase- Between $7.00 and $15.00
+Top Performer- Above $15.00
+SELECT 
+	InvoiceDate, 
+	BillingCity, 
+	BillingAddress, 
+	total,
+	CASE
+	WHEN total < 2.00 THEN 'Baseline Purchase'
+	WHEN total BETWEEN 2.00 and 6.99 THEN 'Low purchase'
+	WHEN total BETWEEN 7.00 and 15.00 THEN 'Target Purchase'
+	ELSE 'Top performer'
+	END as "Purchase Type"
+FROM 
+Invoice
+WHERE "Purchase Type" = 'Top performer'
+order by BillingCity
+*/
+
+/*
+Created By: Siddhartha
+Created Date: 04-25-2025
+Description: Joins on more than two tables | What employees are responcible for the 10 heighest indivisual sales?
+select 
+e.FirstName,
+e.LastName,
+e.EmployeeId,
+c.FirstName,
+c.LastName,
+c.SupportRepId,
+i.CustomerId,
+i.total
+FROM Invoice i
+JOIN Customer c
+on i.CustomerId = c.CustomerId
+JOIN Employee e
+on c.SupportRepId = e.EmployeeId
+order by total DESC LIMIT 10
+*/
+
+/*
+Created By; Siddhartha_________________________________functions
+Created Date:-04-25-2025
+Description: Creating the mailing list of US Customers _________[String functions_upper,lower,length,substr,concatinate]
+SELECT
+	FirstName,
+	LastName,
+	Address,
+	FirstName|| ' ' ||LastName|| ' ' ||Address|| ' ' ||City|| ' ' ||State|| ' ' ||PostalCode as [Mailing Adress],
+	length(postalcode),
+	substr(postalcode,1,5) as [5 Digit Postal Code],
+	upper(firstname) as [First Name],
+	lower(lastname) as [Last Name]
+FROM Customer
+WHERE Country = 'USA'
+*/
+
+/*
+Created By; Siddhartha_________________________________Date functions
+Created Date:-04-25-2025
+Description: calculate the age of all employees
+SELECT 
+	FirstName,
+	LastName,
+	BirthDate,
+	strftime('%Y-%m-%d',birthdate) as [BirthDate no Timecode],
+	strftime('%Y-%m-%d','now')-strftime('%Y-%m-%d',birthdate) as Age
+FROM 
+	Employee
+*/
+
+/*
+Created By; Siddhartha___________________________________Aggregate Funtions and Nested Functions
+Created Date:-04-25-2025
+Description: What are our all time global sales?
+SELECT
+	sum(total) as [Total Sales],
+	round(avg(total),2) as [Aveare Sales],
+	max(total) as [Maximum Sales],
+	min(total) as [Mimimun Sales],
+	count(*) as [Sales Count]
+FROM
+	Invoice
+*/
+
+/*
+Created By; Siddhartha___________________________________GroupBy,where,having
+Created Date:-04-25-2025
+Description: Grouping in SQL | What are the average invoice totals by city, for only the cities that start with l or D or come p anywhere in city?
+and average invoice total is greater then $5.60
+SELECT
+	BillingCountry,
+	BillingCity,
+	round(avg(total),2) as [Average Total]
+FROM 
+	Invoice
+WHERE 	
+	BillingCity like 'L%' or BillingCity like 'D%' or BillingCity like '%p%'
+group by
+	BillingCountry, BillingCity
+HAVING "Average Total" > 5.60
+order by
+	BillingCountry
+*/
+
+/*
+Created By; Siddhartha___________________________________Subquery
+Created Date:-04-25-2025
+Description: Subquery | Gather data about all invoices that are less than the toal average?
+
+SELECT InvoiceDate, BillingAddress, BillingCity,total
+FROM Invoice
+WHERE total < (SELECT round(avg(total),2) as [Average Total] FROM Invoice)
+order by total DESC
+*/
+
+/*
+Created By; Siddhartha 
+Created Date:-04-25-2025
+Description: Subquery in the select | How is each indivisual city performig against the global average sales?
+SELECT
+BillingCity,
+round(avg(total),2) as [City Average],
+(SELECT round(avg(total),2) as [Average Total] FROM Invoice) as GlobalAverage
+FROM Invoice
+group by BillingCity
+order by total DESC
+*/
+
+/*
+Created By; Siddhartha 
+Created Date:-04-25-2025
+Description: Subquery without Aggregate functions, give us all the invoice that comes after the perticular date
+SELECT InvoiceDate,BillingAddress,BillingCity FROM Invoice
+WHERE InvoiceDate > (SELECT InvoiceDate FROM Invoice WHERE InvoiceId = 251) 
+*/
+
+/*
+Created By; Siddhartha 
+Created Date:-04-25-2025
+Description: Returning multiple value from a subquery
+SELECT InvoiceId,InvoiceDate, BillingAddress,BillingCity
+FROM Invoice
+WHERE InvoiceDate in 
+(SELECT
+InvoiceDate
+FROM Invoice
+WHERE InvoiceId in (245,252,259))
+*/
+
+/*
+Created By; Siddhartha _____replace join with subquery
+Created Date:-04-25-2025
+Description: Subquery and Distinct | Which tracks are not selling?
+SELECT TrackId,Composer, 
+Name
+FROM Track
+WHERE TrackId in (SELECT DISTINCT TrackId
+FROM InvoiceLine order by TrackId)
+*/
+
+
+-- Write a SQL Query that identifies tracks that have never been sold. Your query should return a list of these tracks, along with their composer and genre
+select 
+t.TRACKID as "Track ID",
+t.NAME as "Track Name",
+t.COMPOSER,
+g.Name as Genre
+from track t
+join Genre as g
+on g.GENREID = t.GenreId
+where t.TRACKID not in
+(select
+distinct ln.trackid
+from InvoiceLine ln)
+order by "Track Name" ASC
+
+/*
+Created By; Siddhartha 
+Created Date:-04-25-2025
+Description: Create View
+CREATE VIEW V_AvgTotal as
+SELECT 
+	round(avg(total),2) AS [Average Total]
+FROM 
+	Invoice
+	*/
+
+/*
+Created By; Siddhartha 
+Created Date:-04-25-2025
+Description: Modify a View
+DROP VIEW IF EXISTS "main"."V_AvgTotal";
+CREATE VIEW V_AvgTotal as
+SELECT 
+	avg(total) AS [Average Total]
+FROM 
+	Invoice
+	*/
+
+/*
+Created By; Siddhartha 
+Created Date:-04-25-2025
+Description: Views and Join
+CREATE VIEW V_Tracks_InvoiceLine as
+SELECT
+l.InvoiceId,
+l.UnitPrice,
+l.Quantity,
+t.Name,
+t.Composer,
+t.Milliseconds
+FROM InvoiceLine l
+join Track t
+on l.TrackId = t.TrackId
+*/
+
+/*
+Created By; Siddhartha 
+Created Date:-04-25-2025
+Description: Deleting a VIEW
+DROP VIEW
+V_AvgTotal
+*/
+
+/*
+Created By; Siddhartha____________DML
+Created Date:-04-25-2025
+Description: Data Menupulation language | INSERT
+INSERT INTO
+	Artist(Name)
+VALUES('Bob Marley')
+*/
+
+
+/*
+Created By; Siddhartha____________DML
+Created Date:-04-25-2025
+Description: Data Menupulation language | UPDATE
+UPDATE
+Artist
+SET Name = 'Danial Marley'
+WHERE ArtistId = 276 -- withour where caluse it update every single record to Danial Marley
+*/
+
+/*
+Created By; Siddhartha____________DML
+Created Date:-04-25-2025
+Description: Data Menupulation language | DELETE
+without where clause, using DELETE statement will DELETE every single record in your table!
+DELETE FROM
+Artist
+WHERE ArtistId = 276
+*/
+
+
+
+
+
+
+
+
+
